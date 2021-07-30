@@ -1,7 +1,14 @@
 from azureml.core import Workspace, Datastore, Dataset
+from ml_service.util.env_variables import Env
 
 def main():
-    ws = Workspace.from_config()
+    e = Env()
+
+    ws = Workspace.get(
+        name=e.workspace_name,
+        subscription_id=e.subscription_id,
+        resource_group=e.resource_group,
+    )
     print(ws.name, 'loaded.')
     default_ds = ws.get_default_datastore()
     directory = './data/'
