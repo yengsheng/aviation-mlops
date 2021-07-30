@@ -23,7 +23,7 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: 'First Ingestion'
+- stage: 'First_Ingestion'
   displayName: 'First Ingestion'
   jobs:
   - job: "First_Ingestion_Pipeline"
