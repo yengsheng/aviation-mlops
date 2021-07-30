@@ -1,4 +1,4 @@
-from azureml.copre import Workspace, Datastore, Dataset
+from azureml.core import Workspace, Datastore, Dataset
 
 def main():
     ws = Workspace.from_config()
