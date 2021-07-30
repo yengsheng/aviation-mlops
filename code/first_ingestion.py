@@ -12,7 +12,7 @@ def main():
     print(ws.name, 'loaded.')
     default_ds = ws.get_default_datastore()
     directory = './data/'
-    default_ds.upload_file(file='./data/aviation_main.csv',
+    default_ds.upload_files(files=['./data/aviation_main.csv'],
                         target_path = 'aviation-data/',
                         overwrite = True,
                         show_progress = True)
