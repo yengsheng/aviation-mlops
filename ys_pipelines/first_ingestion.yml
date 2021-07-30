@@ -16,7 +16,6 @@ trigger:
     - code/first_ingestion.py
 
 variables:
-- template: AviationMLOps-variables-template.yml
 - group: devopsforai-aml-vg
 
 pool:
