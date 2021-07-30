@@ -37,5 +37,5 @@ jobs:
         set -e # fail on error
         export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
         # Invoke the Python code for first data ingestion
-        python -m code.first_ingestion.py
+        python -m code.first_ingestion
     displayName: 'First code ingestion'
