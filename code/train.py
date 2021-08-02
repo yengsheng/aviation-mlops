@@ -1,15 +1,11 @@
-from azureml.core import Workspace, Datastore, Dataset
+from azureml.core import Workspace, Dataset
 from ml_service.util.env_variables import Env
 from azureml.core import Experiment
-from azureml.core import Model
-import pandas as pd
 import numpy as np
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
-from sklearn.metrics import roc_curve
-from azureml.core.model import Model
 
 def main():
     e = Env()
