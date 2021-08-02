@@ -9,9 +9,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
+from util.model_helper import get_model
+from azureml.core.model import Model
 
 def main():
     e = Env()
+    model_name = 'aviation_model'
 
     ws = Workspace.get(
         name=e.workspace_name,
@@ -24,45 +27,52 @@ def main():
     run = experiment.start_logging()
     print("Starting experiment:", experiment.name)
 
-    # Load dataset
-    dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
-    # Dataset loaded
+    #Retrieving current model
+    model = ws.models['classification_model']
+    print(model)
 
-    # Separate features and labels
-    X, y = dataset[['Investigation.Type','Country','Injury.Severity','Amateur.Built','Number.of.Engines','Total.Fatal.Injuries','Total.Serious.Injuries','Total.Minor.Injuries', 'Total.Uninjured']].values, dataset['Aircraft.damage'].values
+    model = ws.models[model_name]
+    print(model)
 
-    # Split data into training set and test set
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    # # Load dataset
+    # dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
+    # # Dataset loaded
 
-    # Train a decision tree model
-    print('Training a decision tree model')
-    model = DecisionTreeClassifier().fit(X_train, y_train)
+    # # Separate features and labels
+    # X, y = dataset[['Investigation.Type','Country','Injury.Severity','Amateur.Built','Number.of.Engines','Total.Fatal.Injuries','Total.Serious.Injuries','Total.Minor.Injuries', 'Total.Uninjured']].values, dataset['Aircraft.damage'].values
 
-    # calculate accuracy
-    y_hat = model.predict(X_test)
-    acc = np.average(y_hat == y_test)
-    print('Accuracy:', acc)
-    run.log('Accuracy', np.float(acc))
+    # # Split data into training set and test set
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
-    # calculate AUC
-    y_scores = model.predict_proba(X_test)
-    auc = roc_auc_score(y_test,y_scores[:,1])
-    print('AUC: ' + str(auc))
-    run.log('AUC', np.float(auc))
+    # # Train a decision tree model
+    # print('Training a decision tree model')
+    # model = DecisionTreeClassifier().fit(X_train, y_train)
 
-    # Save the trained model
-    model_file = 'aviation_model.pkl'
-    joblib.dump(value=model, filename=model_file)
-    run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
+    # # calculate accuracy
+    # y_hat = model.predict(X_test)
+    # acc = np.average(y_hat == y_test)
+    # print('Accuracy:', acc)
+    # run.log('Accuracy', np.float(acc))
 
-    # Complete the run
-    run.complete()
+    # # calculate AUC
+    # y_scores = model.predict_proba(X_test)
+    # auc = roc_auc_score(y_test,y_scores[:,1])
+    # print('AUC: ' + str(auc))
+    # run.log('AUC', np.float(auc))
 
-    # Register the model
-    run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
-                    tags={'Training context':'Inline Training'},
-                    properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
-    print('Model trained and registered')
+    # # Save the trained model
+    # model_file = 'aviation_model.pkl'
+    # joblib.dump(value=model, filename=model_file)
+    # run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
+
+    # # Complete the run
+    # run.complete()
+
+    # # Register the model
+    # run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
+    #                 tags={'Training context':'Inline Training'},
+    #                 properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
+    # print('Model trained and registered')
 
 if __name__ == '__main__':
     main()
