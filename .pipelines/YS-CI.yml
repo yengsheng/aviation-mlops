@@ -26,6 +26,7 @@ stages:
   jobs:
   - job: Cycle_Data 
     displayName: Periodic Cycling of Data
+    container: mlops
     steps:
     - template: ./templates/data_cycler.yml
 
@@ -33,5 +34,6 @@ stages:
   jobs:
   - job: Retrain_Model 
     displayName: Retrain Model and Reregister if accuracy increases
+    container: mlops
     steps:
     - template: ./templates/train_register.yml
