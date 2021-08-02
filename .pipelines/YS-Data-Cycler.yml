@@ -28,4 +28,4 @@ jobs:
   container: mlops
   timeoutInMinutes: 0
   steps:
-  - template: templates/data_cycler.yml
+  - template: ./templates/data_cycler.yml
