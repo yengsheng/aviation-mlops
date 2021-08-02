@@ -27,8 +27,8 @@ def main():
     print("Starting experiment:", experiment.name)
 
     #Retrieving current model
-    model = ws.models['classification_model']
-    print(model)
+    # model = ws.models['classification_model']
+    # print(model)
 
     model = ws.models[model_name]
     print(model)
