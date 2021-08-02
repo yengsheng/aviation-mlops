@@ -1,0 +1,37 @@
+
+resources:
+  containers:
+  - container: mlops
+    image: mcr.microsoft.com/mlops/python:latest
+
+pr: none
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - AviationMLOps/
+    - code/
+    - .pipelines/
+
+variables:
+- group: devopsforai-aml-vg
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Cycle_Data
+  jobs:
+  - job: Cycle_Data 
+  - displayName: Periodic Cycling of Data
+    steps:
+    - template: .pipelines/YS-Data-Cycler.yml
+
+- stage: Retrain_Model
+  jobs:
+  - job: Retrain_Model 
+  - displayName: Retrain Model and Reregister if accuracy increases
+    steps:
+    - template: .pipelines/YS-Train-Register.yml
