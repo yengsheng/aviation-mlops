@@ -27,11 +27,11 @@ stages:
   - job: Cycle_Data 
     displayName: Periodic Cycling of Data
     steps:
-    - template: /YS-Data-Cycler.yml
+    - template: ./YS-Data-Cycler.yml
 
 - stage: Retrain_Model
   jobs:
   - job: Retrain_Model 
     displayName: Retrain Model and Reregister if accuracy increases
     steps:
-    - template: /YS-Train-Register.yml
+    - template: ./YS-Train-Register.yml
