@@ -6,6 +6,13 @@ resources:
 
 pr: none
 
+schedules:
+- cron: "15 14 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - main
+
 variables:
 - group: devopsforai-aml-vg
 
