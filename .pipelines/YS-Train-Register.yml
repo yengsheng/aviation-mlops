@@ -7,9 +7,6 @@ resources:
 
 pr: none
 trigger:
-  branches:
-    include:
-    - master
   paths:
     include:
     - AviationMLOps/

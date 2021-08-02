@@ -5,15 +5,6 @@ resources:
     image: mcr.microsoft.com/mlops/python:latest
 
 pr: none
-trigger:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - AviationMLOps/
-    - code/
-    - .pipelines/
 
 variables:
 - group: devopsforai-aml-vg

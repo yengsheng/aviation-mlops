@@ -7,14 +7,10 @@ resources:
 
 pr: none
 trigger:
-  branches:
-    include:
-    - master
   paths:
     include:
     - AviationMLOps/
     - code/data_cycler.py
-    - ./templates/data_cycler.yml
 
 variables:
 - group: devopsforai-aml-vg
