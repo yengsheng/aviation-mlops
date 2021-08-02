@@ -31,7 +31,7 @@ def main():
     # print(model)
 
     model = ws.models[model_name]
-    print(model.tags['Accuracy'])
+    print(model.properties['Accuracy'])
 
     # # Load dataset
     # dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
