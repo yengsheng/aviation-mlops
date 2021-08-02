@@ -6,6 +6,11 @@ resources:
 
 pr: none
 
+trigger:
+  paths:
+    include:
+    - code/
+
 schedules:
 - cron: "25 6 * * *"
   displayName: Daily midnight build
