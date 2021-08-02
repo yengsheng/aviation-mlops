@@ -14,6 +14,7 @@ trigger:
     include:
     - AviationMLOps/
     - code/data_cycler.py
+    - templates/data_cycler.yml
 
 variables:
 - group: devopsforai-aml-vg
@@ -27,14 +28,4 @@ jobs:
   container: mlops
   timeoutInMinutes: 0
   steps:
-  - task: AzureCLI@1
-    inputs:
-      azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-      scriptLocation: inlineScript
-      workingDirectory: $(Build.SourcesDirectory)
-      inlineScript: |
-        set -e # fail on error
-        export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-        # Invoke the Python code for first data ingestion
-        python -m code.data_cycler
-    displayName: 'Cycling of data'
+  - template: templates/data_cycler.yml
