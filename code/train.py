@@ -9,7 +9,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
-from util.model_helper import get_model
 from azureml.core.model import Model
 
 def main():
