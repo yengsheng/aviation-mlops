@@ -32,8 +32,8 @@ def main():
     new_main = pd.concat([main_ds.tail(len(main_ds) - 1000), inflow_ds.head(1000)], ignore_index = True)
     new_inflow = pd.concat([inflow_ds.tail(len(inflow_ds) - 1000), main_ds.head(1000)], ignore_index = True)
 
-    new_main = Dataset.Tabular.register_pandas_dataframe(new_main, target = 'aviation-data/', name = 'main', overwrite = True, show_progress = True)
-    new_inflow = Dataset.Tabular.register_pandas_dataframe(new_inflow, target = 'aviation-data/', name = 'inflow', overwrite = True, show_progress = True)
+    new_main = Dataset.Tabular.register_pandas_dataframe(new_main, target = 'aviation-data/', name = 'main', show_progress = True)
+    new_inflow = Dataset.Tabular.register_pandas_dataframe(new_inflow, target = 'aviation-data/', name = 'inflow', show_progress = True)
 
 if __name__ == '__main__':
     main()
