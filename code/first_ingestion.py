@@ -16,6 +16,9 @@ def main():
                         target_path = 'aviation-data/',
                         overwrite = True,
                         show_progress = True)
+    csv_paths = [(default_ds, 'aviation-data/*.csv')]
+    tab_ds = Dataset.Tabular.from_delimited_files(path=csv_paths)
+    tab_ds = tab_ds.register(workspace=ws, name='csv_table')
 
 if __name__ == '__main__':
     main()
