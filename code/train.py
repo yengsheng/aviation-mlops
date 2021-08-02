@@ -26,52 +26,53 @@ def main():
     run = experiment.start_logging()
     print("Starting experiment:", experiment.name)
 
-    #Retrieving current model
-    # model = ws.models['classification_model']
-    # print(model)
-
+    #Retrieving current model and save accuracy
     model = ws.models[model_name]
-    print(model.properties['Accuracy'])
+    production_accuracy = float(model.properties['Accuracy'])
+    print(production_accuracy)
 
-    # # Load dataset
-    # dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
-    # # Dataset loaded
+    # Load dataset
+    dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
+    # Dataset loaded
 
-    # # Separate features and labels
-    # X, y = dataset[['Investigation.Type','Country','Injury.Severity','Amateur.Built','Number.of.Engines','Total.Fatal.Injuries','Total.Serious.Injuries','Total.Minor.Injuries', 'Total.Uninjured']].values, dataset['Aircraft.damage'].values
+    # Separate features and labels
+    X, y = dataset[['Investigation.Type','Country','Injury.Severity','Amateur.Built','Number.of.Engines','Total.Fatal.Injuries','Total.Serious.Injuries','Total.Minor.Injuries', 'Total.Uninjured']].values, dataset['Aircraft.damage'].values
 
-    # # Split data into training set and test set
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    # Split data into training set and test set
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
-    # # Train a decision tree model
-    # print('Training a decision tree model')
-    # model = DecisionTreeClassifier().fit(X_train, y_train)
+    # Train a decision tree model
+    print('Training a decision tree model')
+    model = DecisionTreeClassifier().fit(X_train, y_train)
 
-    # # calculate accuracy
-    # y_hat = model.predict(X_test)
-    # acc = np.average(y_hat == y_test)
-    # print('Accuracy:', acc)
-    # run.log('Accuracy', np.float(acc))
+    # calculate accuracy
+    y_hat = model.predict(X_test)
+    acc = np.average(y_hat == y_test)
+    print('Accuracy:', acc)
+    run.log('Accuracy', np.float(acc))
 
-    # # calculate AUC
-    # y_scores = model.predict_proba(X_test)
-    # auc = roc_auc_score(y_test,y_scores[:,1])
-    # print('AUC: ' + str(auc))
-    # run.log('AUC', np.float(auc))
+    # calculate AUC
+    y_scores = model.predict_proba(X_test)
+    auc = roc_auc_score(y_test,y_scores[:,1])
+    print('AUC: ' + str(auc))
+    run.log('AUC', np.float(auc))
 
-    # # Save the trained model
-    # model_file = 'aviation_model.pkl'
-    # joblib.dump(value=model, filename=model_file)
-    # run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
+    # Save the trained model
+    model_file = 'aviation_model.pkl'
+    joblib.dump(value=model, filename=model_file)
+    run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
 
-    # # Complete the run
-    # run.complete()
+    # Complete the run
+    run.complete()
 
-    # # Register the model
-    # run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
-    #                 tags={'Training context':'Inline Training'},
-    #                 properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
-    # print('Model trained and registered')
+    # Register the model
+    if acc > production_accuracy:
+        run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
+                        tags={'Training context':'Inline Training'},
+                        properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
+        print('New model has higher accuracy, hence model trained and registered')
+    else:
+        print('New model does not have a higher accuracy, hence model trained is not registered')
 
 if __name__ == '__main__':
     main()
