@@ -32,7 +32,7 @@ def main():
     # Dataset loaded
 
     # Separate features and labels
-    X, y = dataset[['Investigation.Type','Country','Injury.Severity','Amateur.Built','Number.of.Engines','Total.Fatal.Injuries','Total.Serious.Injuries','Total.Minor.Injuries', 'Total.Uninjured']].values, dataset['Aircraft.damage'].values
+    X, y = dataset[['Investigation_Type','Country','Injury_Severity','Amateur_Built','Number_of_Engines','Total_Fatal_Injuries','Total_Serious_Injuries','Total_Minor_Injuries', 'Total_Uninjured']].values, dataset['Aircraft_damage'].values
 
     # Split data into training set and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
