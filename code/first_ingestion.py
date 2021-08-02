@@ -17,10 +17,13 @@ def main():
                         target_path = 'aviation-data/',
                         overwrite = True,
                         show_progress = True)
-    csv_paths = [(default_ds, 'aviation-data/aviation_inflow.csv'),
-                (default_ds, 'aviation-data/aviation_main.csv')]
+    csv_paths = [(default_ds, 'aviation-data/aviation_inflow.csv')]
     tab_ds = Dataset.Tabular.from_delimited_files(path=csv_paths)
-    tab_ds = tab_ds.register(workspace=ws, name='csv_table')
+    tab_ds = tab_ds.register(workspace=ws, name='inflow')
+    
+    csv_paths = [(default_ds, 'aviation-data/aviation_main.csv')]
+    tab_ds = Dataset.Tabular.from_delimited_files(path=csv_paths)
+    tab_ds = tab_ds.register(workspace=ws, name='main')
 
 if __name__ == '__main__':
     main()
