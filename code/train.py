@@ -63,3 +63,6 @@ def main():
                     tags={'Training context':'Inline Training'},
                     properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
     print('Model trained and registered')
+
+if __name__ == '__main__':
+    main()
