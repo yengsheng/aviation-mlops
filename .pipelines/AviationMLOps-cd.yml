@@ -17,7 +17,7 @@ resources:
     image: mcr.microsoft.com/mlops/python:latest
   pipelines:
   - pipeline: model-train-ci
-    source: Model-Train-Register-CI # Name of the triggering pipeline
+    source: Aviation MLOps CI # Name of the triggering pipeline
     trigger:
       branches:
         include:
@@ -26,6 +26,9 @@ resources:
 variables:
 - template: AviationMLOps-variables-template.yml
 - group: devopsforai-aml-vg
+
+pool:
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: 'Deploy_ACI'
