@@ -6,20 +6,17 @@ import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
-from azureml.core.authentication import MsiAuthentication
 import os
 from azureml.core.model import Model
 
 def main():
     e = Env()
     model_name = 'aviation_model'
-    msi_auth = MsiAuthentication()
 
     ws = Workspace.get(
         name=e.workspace_name,
         subscription_id=e.subscription_id,
         resource_group=e.resource_group,
-        auth = msi_auth
     )
     print(ws.name, 'loaded.')
 
