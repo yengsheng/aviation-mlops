@@ -6,15 +6,19 @@ from azureml.core import Workspace
 from azureml.core.model import Model
 
 from azureml.core.webservice import AciWebservice
+from azureml.core.authentication import MsiAuthentication
+
 
 def main():
     e = Env()
     model_name = 'aviation_model'
+    msi_auth = MsiAuthentication()
 
     ws = Workspace.get(
         name=e.workspace_name,
         subscription_id=e.subscription_id,
         resource_group=e.resource_group,
+        auth = msi_auth
     )
     print(ws.name, 'loaded.')
 
