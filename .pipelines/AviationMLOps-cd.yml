@@ -27,6 +27,9 @@ variables:
 - template: AviationMLOps-variables-template.yml
 - group: devopsforai-aml-vg
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 stages:
 - stage: 'Deploy_ACI'
   displayName: 'Deploy to ACI'
