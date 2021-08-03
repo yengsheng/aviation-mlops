@@ -6,10 +6,7 @@ resources:
 
 pr: none
 
-trigger:
-  paths:
-    include:
-    - code/
+trigger: none
 
 schedules:
 - cron: "25 6 * * *"

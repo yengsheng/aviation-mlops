@@ -7,6 +7,8 @@ resources:
 
 pr: none
 
+trigger: none
+
 variables:
 - template: AviationMLOps-variables-template.yml
 - group: devopsforai-aml-vg

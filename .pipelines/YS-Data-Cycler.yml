@@ -6,11 +6,7 @@ resources:
     image: mcr.microsoft.com/mlops/python:latest
 
 pr: none
-trigger:
-  paths:
-    include:
-    - AviationMLOps/
-    - code/data_cycler.py
+trigger: none
 
 variables:
 - group: devopsforai-aml-vg
