@@ -21,9 +21,9 @@ jobs:
   timeoutInMinutes: 0
   steps:
   - template: ./templates/train_register.yml
-  
+
 - job: "Training_Run_Report"
-  dependsOn: "Run_ML_Pipeline"
+  dependsOn: "Training_Model_Pipeline"
   condition: always()
   displayName: "Publish artifact if new model was registered"
   container: mlops
