@@ -31,7 +31,7 @@ variables:
   - name: TRAINING_PIPELINE_NAME
     value: "AviationMLOps-Training-Pipeline"
   - name: MODEL_NAME
-    value: AviationMLOps_model.pkl
+    value: aviation_model.pkl
 
   # AML Compute Cluster Config
   - name: AML_ENV_NAME
