@@ -54,7 +54,7 @@ def main():
     run.log('AUC', np.float(auc))
 
     # Save the trained model
-    model_file = 'aviation_model.pkl'
+    model_file = 'AviationMLOps_model.pkl'
     joblib.dump(value=model, filename=model_file)
     run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
 
