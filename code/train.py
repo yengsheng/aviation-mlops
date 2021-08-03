@@ -7,7 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
 from azureml.core.authentication import MsiAuthentication
-
+import os
+from azureml.core.model import Model
 
 def main():
     e = Env()
@@ -72,11 +73,11 @@ def main():
                         properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model has higher accuracy, hence model trained and registered')
     else:
-        run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
-                tags={'Training context':'Inline Training'},
-                properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model does not have a higher accuracy, hence model trained is not registered')
-        print('Actually registered for testing purposes xD')
+
+    registered_model = Model(ws, 'aviation_model')
+    os.environ["MODEL_VERSION"] = str(registered_model.version)
+
 
 if __name__ == '__main__':
     main()
