@@ -6,23 +6,18 @@ import json
 
 from azureml.core import Workspace
 from azureml.core.webservice import AciWebservice
-from ml_service.util.env_variables import Env
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
-e = Env()
 service_name = "mlops-aci"
-aml_workspace = Workspace.get(
-        name=e.workspace_name,
-        subscription_id=e.subscription_id,
-        resource_group=e.resource_group
-    )
+aml_workspace = Workspace.from_config()
+
 service = AciWebservice(aml_workspace, service_name)
 scoring_uri = service.scoring_uri
 
 def api_call(features):
+    global scoring_uri
     # Two sets of data to score, so we get two results back
     data = {"data":
             [
