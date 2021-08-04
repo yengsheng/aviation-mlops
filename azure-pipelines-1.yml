@@ -1,0 +1,17 @@
+# Starter pipeline
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure for Students (c642c8dd-ab1d-4fda-bc9b-908bfbdc75ff)'
+    appType: 'webApp'
+    WebAppName: 'Flask Aviation Prediction'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
