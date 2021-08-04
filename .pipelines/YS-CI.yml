@@ -38,7 +38,7 @@ stages:
     steps:
     - template: ./templates/train_register.yml
   - job: "Training_Run_Report"
-    dependsOn: "Run_ML_Pipeline"
+    dependsOn: "Retrain_Model"
     condition: always()
     displayName: "Publish artifact if new model was registered"
     container: mlops
