@@ -70,11 +70,11 @@ def main():
                         properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model has higher accuracy, hence model trained and registered')
     else:
+        run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
+                    tags={'Training context':'Inline Training'},
+                    properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model does not have a higher accuracy, hence model trained is not registered')
-
-    registered_model = Model(ws, 'aviation_model')
-    os.environ["MODEL_VERSION"] = str(registered_model.version)
-
+        print("registered anyway for testing purposes")
 
 if __name__ == '__main__':
     main()
