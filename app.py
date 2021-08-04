@@ -4,17 +4,19 @@ from wtforms import TextField, SubmitField, SelectField
 import requests
 import json
 
-from azureml.core import Workspace
-from azureml.core.webservice import AciWebservice
+# from azureml.core import Workspace
+# from azureml.core.webservice import AciWebservice
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
-service_name = "mlops-aci"
-aml_workspace = Workspace.from_config()
+# service_name = "mlops-aci"
+# aml_workspace = Workspace.from_config()
 
-service = AciWebservice(aml_workspace, service_name)
-scoring_uri = service.scoring_uri
+# service = AciWebservice(aml_workspace, service_name)
+# scoring_uri = service.scoring_uri
+
+scoring_uri = "http://78a451f7-a9af-4b0a-a83f-dd1ba03a861f.southeastasia.azurecontainer.io/score"
 
 def api_call(features):
     global scoring_uri
@@ -34,10 +36,6 @@ def api_call(features):
     resp = requests.post(scoring_uri, input_data, headers=headers)
     print(resp.text)
     return(resp.text)
-
-class APIForm(FlaskForm):
-    APILink = TextField('Paste the URI here: ')
-    submit = SubmitField('Submit')
 
 class AviationForm(FlaskForm):
     #InvestigationType = TextField('Investigation Type')
