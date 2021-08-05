@@ -10,13 +10,15 @@ import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
+destroyed_or_no = ['Not destroyed', 'Destroyed']
+
 # service_name = "mlops-aci"
 # aml_workspace = Workspace.from_config()
 
 # service = AciWebservice(aml_workspace, service_name)
 # scoring_uri = service.scoring_uri
 
-scoring_uri = "http://78a451f7-a9af-4b0a-a83f-dd1ba03a861f.southeastasia.azurecontainer.io/score"
+scoring_uri = "http://85b977c2-38c9-45f8-b01a-2896acc203bf.southeastasia.azurecontainer.io/score"
 
 def api_call(features):
     global scoring_uri
@@ -27,15 +29,16 @@ def api_call(features):
             ]
             }
     # Convert to JSON string
-    input_data = json.dumps(data)
+    input_data = json.dumps({"data": data})
 
     # Set the content type
     headers = {'Content-Type': 'application/json'}
 
     # Make the request and display the response
     resp = requests.post(scoring_uri, input_data, headers=headers)
-    print(resp.text)
-    return(resp.text)
+    predicted_class = json.loads(resp.json())
+    print(predicted_class)
+    return(predicted_class)
 
 class AviationForm(FlaskForm):
     #InvestigationType = TextField('Investigation Type')
@@ -82,6 +85,7 @@ def index():
 
 @app.route('/prediction')
 def prediction():
+    global destroyed_or_no
     result = api_call([session['InvestigationType'],
                         session['Country'],
                         session['InjurySeverity'],
@@ -91,6 +95,7 @@ def prediction():
                         session['SeriousInjuries'],
                         session['MinorInjuries'],
                         session['Uninjured']]).strip("\\[]\"")
+    print(type(result))
     return render_template('prediction.html', results=result)
 
 if __name__ == '__main__':
