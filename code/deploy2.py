@@ -28,11 +28,16 @@ def main():
 
     service_name = "aviation-service"
     model_name = "aviation_model"
-    model = Model(ws, model_name)
+    model = ws.models[model_name]
+    print(model.name, 'version', model.version)
+
     service = Model.deploy(ws, service_name, [model], inference_config, deployment_config)
 
     service.wait_for_deployment(True)
     print(service.state)
+
+    print(service.get_logs())
+
 
 if __name__ == '__main__':
     main()
