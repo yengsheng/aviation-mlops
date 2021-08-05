@@ -3,7 +3,7 @@ steps:
   inputs:
     azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
     scriptLocation: inlineScript
-    workingDirectory: $(Build.SourcesDirectory)
+    workingDirectory: $(Build.SourcesDirectory)/$(DEPLOY_PATH)
     inlineScript: |
       set -e # fail on error
       export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
