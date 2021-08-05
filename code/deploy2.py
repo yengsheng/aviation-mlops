@@ -26,7 +26,7 @@ def main():
 
     deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 
-    service_name = "aviation-service"
+    service_name = "aviation-service2"
     model_name = "aviation_model"
     model = ws.models[model_name]
     print(model.name, 'version', model.version)
