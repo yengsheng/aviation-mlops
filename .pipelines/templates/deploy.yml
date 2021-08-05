@@ -8,5 +8,5 @@ steps:
       set -e # fail on error
       export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
       # Invoke the Python code for first data ingestion
-      python -m deploy2
+      python -m deploy2.py
   displayName: 'Deploy model'
