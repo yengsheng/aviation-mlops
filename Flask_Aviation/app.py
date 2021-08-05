@@ -4,25 +4,22 @@ from wtforms import TextField, SubmitField, SelectField
 import requests
 import json
 
-from azureml.core import Workspace
-from azureml.core.webservice import AciWebservice
-from ml_service.util.env_variables import Env
-
+# from azureml.core import Workspace
+# from azureml.core.webservice import AciWebservice
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
-e = Env()
-service_name = "mlops-aci"
-aml_workspace = Workspace.get(
-        name=e.workspace_name,
-        subscription_id=e.subscription_id,
-        resource_group=e.resource_group
-    )
-service = AciWebservice(aml_workspace, service_name)
-scoring_uri = service.scoring_uri
+# service_name = "mlops-aci"
+# aml_workspace = Workspace.from_config()
+
+# service = AciWebservice(aml_workspace, service_name)
+# scoring_uri = service.scoring_uri
+
+scoring_uri = "http://11665baa-721f-4c9b-8268-6e25700ac79d.southeastasia.azurecontainer.io/score"
 
 def api_call(features):
+    global scoring_uri
     # Two sets of data to score, so we get two results back
     data = {"data":
             [
@@ -37,12 +34,8 @@ def api_call(features):
 
     # Make the request and display the response
     resp = requests.post(scoring_uri, input_data, headers=headers)
-    print(resp.text)
+    print(resp)
     return(resp.text)
-
-class APIForm(FlaskForm):
-    APILink = TextField('Paste the URI here: ')
-    submit = SubmitField('Submit')
 
 class AviationForm(FlaskForm):
     #InvestigationType = TextField('Investigation Type')
@@ -89,6 +82,7 @@ def index():
 
 @app.route('/prediction')
 def prediction():
+    global destroyed_or_no
     result = api_call([session['InvestigationType'],
                         session['Country'],
                         session['InjurySeverity'],
@@ -98,6 +92,7 @@ def prediction():
                         session['SeriousInjuries'],
                         session['MinorInjuries'],
                         session['Uninjured']]).strip("\\[]\"")
+    print(type(result))
     return render_template('prediction.html', results=result)
 
 if __name__ == '__main__':

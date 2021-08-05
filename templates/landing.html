@@ -1,9 +1,0 @@
-<h1>Welcome to aircraft damage prediction</h1>
-<h2>Please enter your API link below:</h2>
-<form method="POST">
-    {# This hidden_tag is a CSRF security feature. #}
-    {{ form.hidden_tag() }}
-    {{ form.APILink.label }} {{form.APILink}}
-    <br>
-    {{ form.submit() }}
-</form>
