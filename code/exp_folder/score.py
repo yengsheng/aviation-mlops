@@ -1,3 +1,4 @@
+import os
 import json
 import joblib
 import numpy as np
@@ -7,7 +8,10 @@ from azureml.core.model import Model
 def init():
     global model
     # Get the path to the deployed model file and load it
-    model_path = Model.get_model_path('aviation_model')
+
+    model_path = Model.get_model_path(
+        os.getenv("AZUREML_MODEL_DIR").split('/')[-2])
+    # model_path = Model.get_model_path('aviation_model')
     model = joblib.load(model_path)
 
 # Called when a request is received
