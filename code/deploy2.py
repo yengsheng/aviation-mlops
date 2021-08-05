@@ -16,8 +16,8 @@ def main():
     )
 
     # Set path for scoring script and environment files
-    script_file = os.path("./exp_folder/score.py")
-    env_file = os.path("./exp_folder/env.yml")
+    script_file = "./exp_folder/score.py"
+    env_file = "./exp_folder/env.yml"
 
     # Configure the scoring environment
     inference_config = InferenceConfig(runtime= "python",

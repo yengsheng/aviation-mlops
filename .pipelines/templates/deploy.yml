@@ -9,4 +9,4 @@ steps:
       export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
       # Invoke the Python code for first data ingestion
       python -m code.deploy2
-  displayName: 'Cycling of data'
+  displayName: 'Deploy model'

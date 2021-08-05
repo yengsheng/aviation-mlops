@@ -15,8 +15,8 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: "Data_Cycling_Pipeline"
-  displayName: "Data Cycling Pipeline"
+- job: "Model_Deploy_Pipeline"
+  displayName: "Model Deploy Pipeline"
   container: mlops
   timeoutInMinutes: 0
   steps:
