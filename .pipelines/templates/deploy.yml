@@ -3,10 +3,10 @@ steps:
   inputs:
     azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
     scriptLocation: inlineScript
-    workingDirectory: $(Build.SourcesDirectory)/code
+    workingDirectory: $(Build.SourcesDirectory)
     inlineScript: |
       set -e # fail on error
       export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
       # Invoke the Python code for first data ingestion
-      python -m deploy2
+      python -m code.deploy2
   displayName: 'Deploy model'

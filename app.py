@@ -10,8 +10,6 @@ import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
-destroyed_or_no = ['Not destroyed', 'Destroyed']
-
 # service_name = "mlops-aci"
 # aml_workspace = Workspace.from_config()
 
