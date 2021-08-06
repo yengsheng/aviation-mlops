@@ -3,22 +3,22 @@ from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField, SelectField
 import requests
 import json
-from ml_service.util.env_variables import Env
+#from ml_service.util.env_variables import Env
 from azureml.core import Workspace
 from azureml.core.webservice import AciWebservice
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'someRandomKey'
 
-e = Env()
-ws = Workspace.get(
-    name=e.workspace_name,
-    subscription_id=e.subscription_id,
-    resource_group=e.resource_group
-)
+# e = Env()
+# ws = Workspace.get(
+#     name=e.workspace_name,
+#     subscription_id=e.subscription_id,
+#     resource_group=e.resource_group
+# )
 
 service_name = "aviation-service3"
-# aml_workspace = Workspace.from_config()
+ws = Workspace.from_config()
 
 service = AciWebservice(ws, service_name)
 scoring_uri = service.scoring_uri
