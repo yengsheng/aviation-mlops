@@ -47,7 +47,7 @@ stages:
           # Invoke the Python code for first data ingestion
           python -m code.train --output_new_register_file "new_registration.txt"
           NEW_MODEL="$(cat new_registration.txt)"
-          echo $NEW_MODEL >newmodel.json
+          echo $NEW_MODEL >newmodel.txt
       displayName: 'Training and registering model'
     - publish: newmodel.json
       artifact: newmodel
