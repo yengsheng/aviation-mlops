@@ -27,6 +27,21 @@ steps:
         runId: '${{ parameters.artifactBuildId }}'
       runBranch: '$(Build.SourceBranch)'
       path: $(Build.SourcesDirectory)/bin
+
+  - task: AzureCLI@1
+    inputs:
+      azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+      scriptLocation: inlineScript
+      workingDirectory: $(Build.SourcesDirectory)
+      inlineScript: |
+        cat $(Build.SourcesDirectory)/bin/newmodel.txt
+
+      # set -e # fail on error
+      # export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+      # # Invoke the Python building and publishing a training pipeline
+      # python -m ml_service.pipelines.AviationMLOps_build_train_pipeline
+    displayName: 'Publish Azure Machine Learning Pipeline'
+
   - task: Bash@3
     name: get_model
     displayName: Parse Json for Model Name and Version
