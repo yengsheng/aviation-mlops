@@ -8,5 +8,5 @@ steps:
       set -e # fail on error
       export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
       # Invoke the Python code for first data ingestion
-      python -m code.train
+      python -m code.train --output_new_register_file "new_registration.txt"
   displayName: 'Training and registering model'

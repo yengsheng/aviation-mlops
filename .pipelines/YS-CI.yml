@@ -36,4 +36,29 @@ stages:
     displayName: Retrain Model and Reregister if accuracy increases
     container: mlops
     steps:
-    - template: ./templates/train_register.yml
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          set -e # fail on error
+          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+          # Invoke the Python code for first data ingestion
+          python -m code.train --output_new_register_file "new_registration.txt"
+          NEWMODEL="$(cat new_registration.txt)"
+          echo "##vso[task.setvariable variable=NEWMODEL;isOutput=true]$NEWMODEL"
+      displayName: 'Training and registering model'
+
+- stage: Test_Var
+  jobs:
+  - job: Test_Var
+    steps:
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          echo $(NEWMODEL)
+      displayName: 'Testing Variable thingy'

@@ -8,8 +8,19 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
 import os
 from azureml.core.model import Model
+import argparse
 
 def main():
+
+    parser = argparse.ArgumentParser("register")
+    parser.add_argument(
+        "--output_new_register_file",
+        type=str,
+        default="new_registration.txt",
+        help="Name of a file to write whether to register new model or not"
+    )
+    args = parser.parse_args()
+
     e = Env()
     model_name = 'aviation_model'
 
@@ -24,10 +35,13 @@ def main():
     run = experiment.start_logging()
     print("Starting experiment:", experiment.name)
 
-    #Retrieving current model and save accuracy
-    model = ws.models[model_name]
-    production_accuracy = float(model.properties['Accuracy'])
-    print(production_accuracy)
+    #Retrieving current model and save accuracy, if first run, then production_accuracy is set to 0.
+    try:
+        model = ws.models[model_name]
+        production_accuracy = float(model.properties['Accuracy'])
+        print(production_accuracy)
+    except KeyError:
+        production_accuracy = 0
 
     # Load dataset
     dataset = Dataset.get_by_name(ws, name='main').to_pandas_dataframe()
@@ -69,12 +83,12 @@ def main():
                         tags={'Training context':'Inline Training'},
                         properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model has higher accuracy, hence model trained and registered')
+        with open(args.output_new_register_file, "w") as out_file:
+                out_file.write('y')
     else:
-        run.register_model(model_path='outputs/aviation_model.pkl', model_name='aviation_model',
-                    tags={'Training context':'Inline Training'},
-                    properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
         print('New model does not have a higher accuracy, hence model trained is not registered')
-        print("registered anyway for testing purposes")
+        with open(args.output_new_register_file, "w") as out_file:
+                out_file.write('n')
 
 if __name__ == '__main__':
     main()
