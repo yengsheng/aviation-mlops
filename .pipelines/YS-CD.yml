@@ -41,7 +41,7 @@ stages:
     timeoutInMinutes: 0
     steps:
     - download: none
-    - template: AviationMLOps-get-model-id-artifact-template.yml
+    - template: ./templates/new_model.yml
     #   parameters:
     #     projectId: '$(resources.pipeline.model-train-ci.projectID)'
     #     pipelineId: '$(resources.pipeline.model-train-ci.pipelineID)'
