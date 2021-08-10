@@ -49,5 +49,5 @@ stages:
           NEW_MODEL="$(cat new_registration.txt)"
           echo $NEW_MODEL >newmodel.txt
       displayName: 'Training and registering model'
-    - publish: newmodel.json
+    - publish: newmodel.txt
       artifact: newmodel
