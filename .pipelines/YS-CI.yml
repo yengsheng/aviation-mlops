@@ -60,5 +60,7 @@ stages:
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
-          echo $NEWMODEL
+          echo $NEWMODEL >newmodel.json
       displayName: 'Testing Variable thingy'
+    - publish: newmodel.json
+      artifact: newmodel
