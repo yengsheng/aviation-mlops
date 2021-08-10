@@ -60,5 +60,5 @@ stages:
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
-          echo $(NEWMODEL)
+          echo $NEWMODEL
       displayName: 'Testing Variable thingy'
