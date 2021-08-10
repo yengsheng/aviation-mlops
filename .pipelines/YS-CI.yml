@@ -48,6 +48,7 @@ stages:
           python -m code.train --output_new_register_file "new_registration.txt"
           NEWMODEL="$(cat new_registration.txt)"
           echo "##vso[task.setvariable variable=NEWMODEL;isOutput=true]$NEWMODEL"
+          echo $NEWMODEL
       displayName: 'Training and registering model'
 
 - stage: Test_Var
