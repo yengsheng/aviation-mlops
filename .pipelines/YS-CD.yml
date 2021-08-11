@@ -67,6 +67,7 @@ stages:
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
+          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
           python -m code.deploy --new_model $(cat $(System.ArtifactsDirectory)/newmodel.txt)
           
         # cat $(System.ArtifactsDirectory)/newmodel.txt
