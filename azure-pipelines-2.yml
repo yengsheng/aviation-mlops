@@ -25,6 +25,6 @@ steps:
     artifact: newmodel
     azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
     scriptLocation: inlineScript
-    workingDirectory: $(Build.SourcesDirectory)
+    workingDirectory: $(System.ArtifactsDirectory)
     inlineScript: |
-      cat $(Pipeline.Workspace)/newmodel.txt
+      cat $(System.ArtifactsDirectory)/newmodel.txt
