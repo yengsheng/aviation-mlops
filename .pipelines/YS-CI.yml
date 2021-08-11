@@ -49,5 +49,8 @@ stages:
           NEW_MODEL="$(cat new_registration.txt)"
           echo $NEW_MODEL >newmodel.txt
       displayName: 'Training and registering model'
-    - publish: newmodel.txt
-      artifact: newmodel
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(Build.SourcesDirectory)/newmodel.txt
+        artifactName: newmodel
+        

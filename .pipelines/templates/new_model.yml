@@ -12,24 +12,30 @@ parameters:
   default: latest
   
 steps:
-  - download: none
+  - download: current
+
+  # - task: DownloadPipelineArtifact@2
+  #   displayName: Download Pipeline Artifacts
+  #   inputs:
+  #     source: 'specific'
+  #     project: '${{ parameters.projectId }}'
+  #     pipeline: '${{ parameters.pipelineId }}'
+  #     preferTriggeringPipeline: true
+  #     ${{ if eq(parameters.artifactBuildId, 'latest') }}:
+  #       buildVersionToDownload: 'latestFromBranch'
+  #     ${{ if ne(parameters.artifactBuildId, 'latest') }}:
+  #       buildVersionToDownload: 'specific'
+  #       runId: '${{ parameters.artifactBuildId }}'
+  #     runBranch: '$(Build.SourceBranch)'
+  #     path: $(Build.SourcesDirectory)/bin
+
   - task: DownloadPipelineArtifact@2
-    displayName: Download Pipeline Artifacts
     inputs:
-      source: 'specific'
-      project: '${{ parameters.projectId }}'
-      pipeline: '${{ parameters.pipelineId }}'
-      preferTriggeringPipeline: true
-      ${{ if eq(parameters.artifactBuildId, 'latest') }}:
-        buildVersionToDownload: 'latestFromBranch'
-      ${{ if ne(parameters.artifactBuildId, 'latest') }}:
-        buildVersionToDownload: 'specific'
-        runId: '${{ parameters.artifactBuildId }}'
-      runBranch: '$(Build.SourceBranch)'
-      path: $(Build.SourcesDirectory)/bin
+      artifact: newmodel
 
   - task: AzureCLI@1
     inputs:
+      artifact: newmodel
       azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
       scriptLocation: inlineScript
       workingDirectory: $(Build.SourcesDirectory)
