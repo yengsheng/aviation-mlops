@@ -67,8 +67,10 @@ stages:
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
-          cat $(System.ArtifactsDirectory)/newmodel.txt
-          echo '$(NEWMODEL)'
+          python -m code.deploy --new_model cat $(System.ArtifactsDirectory)/newmodel.txt
+          
+        # cat $(System.ArtifactsDirectory)/newmodel.txt
+        # echo '$(NEWMODEL)'
           
     # - task: AzureCLI@1
     #   displayName: 'Install AzureML CLI'
