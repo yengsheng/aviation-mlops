@@ -56,7 +56,7 @@ stages:
         azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
         scriptLocation: inlineScript
         workingDirectory: $(System.ArtifactsDirectory)
-        inlineScript: |
+        script: |
           cat $(System.ArtifactsDirectory)/newmodel.txt
           NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
           echo "$(NEWMODEL)"
