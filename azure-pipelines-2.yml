@@ -1,0 +1,37 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'specific'
+    project: '957cd02c-b6d1-4cd9-a32a-eba3b0eb4e29'
+    pipeline: '17'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'newmodel'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: AzureCLI@1
+  inputs:
+    artifact: newmodel
+    azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+    scriptLocation: inlineScript
+    workingDirectory: $(Build.SourcesDirectory)
+    inlineScript: |
+      cat $(System.ArtifactsDirectory)/newmodel.txt
