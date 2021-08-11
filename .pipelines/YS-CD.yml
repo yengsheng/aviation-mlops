@@ -58,7 +58,7 @@ stages:
         workingDirectory: $(System.ArtifactsDirectory)
         inlineScript: |
           cat $(System.ArtifactsDirectory)/newmodel.txt
-          NEWMODEL=$(cat newmodel.txt)
+          NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
           echo $(NEWMODEL)
 
     # - task: AzureCLI@1
