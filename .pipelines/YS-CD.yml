@@ -40,12 +40,27 @@ stages:
     container: mlops
     timeoutInMinutes: 0
     steps:
-    - download: none
-    - template: ./templates/new_model.yml
-      parameters:
-        projectId: '$(resources.pipeline.model-train-ci.projectID)'
-        pipelineId: '$(resources.pipeline.model-train-ci.pipelineID)'
-        artifactBuildId: ${{ parameters.artifactBuildId }}
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'specific'
+        project: '957cd02c-b6d1-4cd9-a32a-eba3b0eb4e29'
+        pipeline: '17'
+        buildVersionToDownload: 'latest'
+        downloadType: 'single'
+        artifactName: 'newmodel'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureCLI@1
+      inputs:
+        artifact: newmodel
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(System.ArtifactsDirectory)
+        inlineScript: |
+          cat $(System.ArtifactsDirectory)/newmodel.txt
+          NEWMODEL=$(cat newmodel.txt)
+          echo $(NEWMODEL)
+
     # - task: AzureCLI@1
     #   displayName: 'Install AzureML CLI'
     #   inputs:
