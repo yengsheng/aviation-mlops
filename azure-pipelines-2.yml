@@ -26,12 +26,3 @@ steps:
     downloadType: 'single'
     artifactName: 'newmodel'
     downloadPath: '$(System.ArtifactsDirectory)'
-
-- task: AzureCLI@1
-  inputs:
-    artifact: newmodel
-    azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-    scriptLocation: inlineScript
-    workingDirectory: $(Build.SourcesDirectory)
-    inlineScript: |
-      cat $(System.ArtifactsDirectory)/newmodel.txt
