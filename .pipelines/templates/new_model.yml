@@ -34,7 +34,7 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(Build.SourcesDirectory)
       inlineScript: |
-        cat $(Build.SourcesDirectory)/bin/newmodel.txt
+        cat $(Pipeline.Workspace)/newmodel.txt
 
       # set -e # fail on error
       # export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
