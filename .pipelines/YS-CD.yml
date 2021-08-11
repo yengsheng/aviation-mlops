@@ -51,11 +51,9 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
 
     - task: Bash@3
+      displayName: Setting Variable
       inputs:
-        artifact: newmodel
-        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-        scriptLocation: inlineScript
-        workingDirectory: $(System.ArtifactsDirectory)
+        targetType: inlineScript
         script: |
           cat $(System.ArtifactsDirectory)/newmodel.txt
           NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
