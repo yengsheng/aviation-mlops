@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+- group: devopsforai-aml-vg
+
 steps:
 - task: DownloadBuildArtifacts@1
   inputs:
