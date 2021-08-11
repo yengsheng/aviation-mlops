@@ -59,7 +59,7 @@ stages:
         inlineScript: |
           cat $(System.ArtifactsDirectory)/newmodel.txt
           NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
-          echo $(NEWMODEL)
+          echo "$(NEWMODEL)"
 
     # - task: AzureCLI@1
     #   displayName: 'Install AzureML CLI'
