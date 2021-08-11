@@ -59,6 +59,14 @@ stages:
           NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
           echo $NEWMODEL
 
+    - task: AzureCLI@1
+      displayName: 'Deploy to ACI (Python)'
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          echo $NEWMODEL
     # - task: AzureCLI@1
     #   displayName: 'Install AzureML CLI'
     #   inputs:
