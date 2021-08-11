@@ -67,7 +67,7 @@ stages:
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
-          python -m code.deploy --new_model cat $(System.ArtifactsDirectory)/newmodel.txt
+          python -m code.deploy --new_model '$(cat $(System.ArtifactsDirectory)/newmodel.txt)'
           
         # cat $(System.ArtifactsDirectory)/newmodel.txt
         # echo '$(NEWMODEL)'
