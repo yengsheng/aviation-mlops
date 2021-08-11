@@ -50,15 +50,15 @@ stages:
         artifactName: 'newmodel'
         downloadPath: '$(System.ArtifactsDirectory)'
 
-    # - task: Bash@3
-    #   displayName: Setting Variable
-    #   inputs:
-    #     targetType: inlineScript
-    #     script: |
-    #       cat $(System.ArtifactsDirectory)/newmodel.txt
-    #       NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
-    #       echo $NEWMODEL
-    #       echo "##vso[task.setvariable variable=NEWMODEL;isOutput=true]$NEWMODEL"
+    - task: Bash@3
+      displayName: Setting Variable
+      inputs:
+        targetType: inlineScript
+        script: |
+          cat $(System.ArtifactsDirectory)/newmodel.txt
+          NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
+          echo $NEWMODEL
+          echo "##vso[task.setvariable variable=NEWMODEL;isOutput=true]$NEWMODEL"
 
     - task: AzureCLI@1
       displayName: 'Deploy to ACI (Python)'
@@ -68,8 +68,7 @@ stages:
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
           cat $(System.ArtifactsDirectory)/newmodel.txt
-          NEWMODEL=$(cat $(System.ArtifactsDirectory)/newmodel.txt)
-          echo $(NEWMODEL)
+          echo '$(NEWMODEL)'
           
     # - task: AzureCLI@1
     #   displayName: 'Install AzureML CLI'
