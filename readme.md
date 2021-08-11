@@ -1,11 +1,13 @@
-## Getting Started
+# Getting Started
 Follow the tutorial [here](https://github.com/microsoft/MLOpsPython/blob/master/docs/getting_started.md) until the **Create an Azure DevOps Service Connection for the Azure ML Workspace** step. The required .yml file can be found in this repository.
 
 ## First Data Ingestion
 Run YS-First-Ingestion.yml the same way the environment setup was done. This pipeline will run a Python script which registers two datasets: aviation_main.csv and aviation_inflow.csv, both of which can be found under the data subfolder. 
 
 ## Continuous Integration
-Next, run YS-CI.yml the same way as above. This pipeline will cycle the data, simulating new data inflow into our dataset, and retrains the model. The data cycling updates both datasets, the main and the inflow, allowing for an infinite number of runs. If the new model has a higher accuracy, then it is registered appended as a new version of the model. Regardless, a build artifact will be published, with either a y or n, depending on whether a new model is registered. *The first run will always return y*
+Next, run YS-CI.yml the same way as above. This pipeline will cycle the data, simulating new data inflow into our dataset, and retrains the model. The data cycling updates both datasets, the main and the inflow, allowing for an infinite number of runs. If the new model has a higher accuracy, then it is registered appended as a new version of the model. Regardless, a build artifact will be published, with either a y or n, depending on whether a new model is registered. 
+
+*The first run will always return y.*
 
 ## Continuous Deployment
 Under Pipelines, click on New pipeline, then select where the repo is saved, then click on Show assistant, and select Download build artifacts. Change 'Current build' to 'Specific build', select your project, then select the CI pipeline created in the previous step under 'Build pipeline'. Under 'Artifact name', enter 'newmodel', and click Add. Copy and paste the 'project' and 'pipeline' values generated, and paste them under YS-CD.yml, lines 46 and 47 respectively.
